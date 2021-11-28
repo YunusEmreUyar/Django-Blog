@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Kayıt ol{% endblock %}
+{% block main %}
+<br><br>
+
+<div class="container container-fluid">
+	<form method="POST">
+		{% csrf_token %}
+		<fieldset class="form-group mr-3 ml-3">
+			{{ form| crispy }}
+		</fieldset>
+		<div class="form-group">
+			<button class="btn btn-outline-info ml-3" type="submit">Kayıt Ol</button>
+		</div>
+	</form>
+	<div class="border-top pt-3 ml-3">
+		<small class="text-muted">
+			Zaten bir hesabın var mı? <a href="{% url 'login' %}">Giriş Yap</a>
+		</small>
+	</div>
+</div>
+<br><br>
+{% endblock main %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Giriş yap{% endblock %}
+{% block main %}
+<br><br>
+
+<div class="container container-fluid">
+	<form method="POST">
+		{% csrf_token %}
+		<fieldset class="form-group">
+			{{ form | crispy }}
+		</fieldset>
+		<div class="form-group">
+			<button class="btn btn-info" type="submit">Giriş Yap</button><br>
+			<a href="{% url 'register' %}"><small>Hala bir hesabın yok mu?</small></a><br>
+			<a href="{% url 'password_reset' %}"><small>Şifremi unuttum.</small></a>
+		</div>
+	</form>
+</div>
+<br><br><br><br><br>
+{% endblock main %}

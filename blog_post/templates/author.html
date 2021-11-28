@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Yazar sayfası{% endblock %}
+
+{% block style %}
+  <style type="text/css">
+    h1 {
+      text-align: center;
+    }
+
+  </style>
+{% endblock %}
+
+
+{% block main %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container container-fluid">
+    <h1 class="display-4">{{ author.username }} tarafından yazılan yazılar</h1>
+  </div>
+</div>
+<div class="mx-auto">
+  {% for post in posts %}
+    <div class="container container-fluid">
+        {% if post.cover %}
+          <a href="{% url 'article-detail' post.pk %}"><img src={{post.cover.url}} class="card-img-top post-cover"></a>
+        {% else %}
+          <a href="{% url 'article-detail' post.pk %}"><img src="{% static 'default-movie.jpg' %}" class="card-img-top post-cover"></a>
+        {% endif %}
+        <div><h1 class="gradient-text">{{ post.title }}</h1></div>
+        <p>Tahmini okuma süresi: {{ post.estimated_reading_time }} dakika.</p>
+        <p>{{ post.description }}</p>
+        <p><small>{{ post.date_created | naturaltime }}</small></p><hr>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
