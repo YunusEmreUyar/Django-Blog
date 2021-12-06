@@ -18,7 +18,7 @@
         {% else %}
           <a href="{% url 'article-detail' post.pk %}"><img src="{% static 'default-movie.jpg' %}" class="card-img-top post-cover"></a>
         {% endif %}
-        <div><h1 class="gradient-text alert-secondary">{{ post.title }}</h1></div>
+        <div><h1 class="gradient-text">{{ post.title }}</h1></div>
         <a href="{% url 'author' post.author.id %}">{{ post.author }}</a> yazdı.<p>Tahmini okuma süresi: {{ post.estimated_reading_time }} dakika.</p>
         <p>{{ post.description }}</p>
         <p align="right"><small>{{ post.date_created | naturaltime }}</small></p><hr>

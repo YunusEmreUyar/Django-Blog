@@ -7,7 +7,7 @@
 <br><br>
   <div class="mx-auto">
     {% for post in object_list %}
-      <div class="container container-fluid" >
+      <div class="container container-fluid">
           <div><h2><a class="gradient-text" href="{% url 'category' post.category.id %}">{{ post.category }}</a></h2></div>
           {% if post.cover %}
             <a href="{% url 'article-detail' post.pk %}"><img src={{post.cover.url}} class="card-img-top post-cover"></a>
