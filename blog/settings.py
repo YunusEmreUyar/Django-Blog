@@ -27,7 +27,7 @@ SECRET_KEY = '4+itcgq)%2+crlvkm1v14%u)#g7^n0z$az_-z&x-uqv6+8)v+s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["artandmovie.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["artandmovieisnotgonnabethename.herokuapp.com", "127.0.0.1"]
 
 
 # Application definition
