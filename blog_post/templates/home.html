@@ -8,13 +8,13 @@
   <div class="mx-auto">
     {% for post in object_list %}
       <div class="container container-fluid">
-          <div><h2><a class="gradient-text" href="{% url 'category' post.category.id %}">{{ post.category }}</a></h2></div>
+          <div><h2><a class="hashtag" href="{% url 'category' post.category.id %}">{{ post.category }}</a></h2></div>
           {% if post.cover %}
             <a href="{% url 'article-detail' post.pk %}"><img src={{post.cover.url}} class="card-img-top post-cover"></a>
           {% else %}
             <a href="{% url 'article-detail' post.pk %}"><img src="{% static 'default-movie.jpg' %}" class="card-img-top post-cover"></a>
           {% endif %}
-          <h1 class="gradient-text post-header">{{ post.title }}</h1>
+          <h1 class="post-header">{{ post.title }}</h1>
           <a href="{% url 'author' post.author.id %}">{{ post.author }}</a> yazdı.<p>Tahmini okuma süresi: {{ post.estimated_reading_time }} dakika.</p>
           <p>{{ post.description }}</p>
           <p><small>{{ post.date_created | naturaltime }}</small></p><hr>

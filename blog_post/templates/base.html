@@ -19,23 +19,29 @@
           width:100%;
           bottom:0;
         }
+        
         body {
           font-family: "Playfair Display", serif;
         }
+        
         .jumbotron > div > h1 {
           text-align: center;
         }
+        
         .container {
           max-width: 80%;
         }
+        
         .profile {
           max-width: 180px;
           height: auto;
         }
+        
         .comment-img {
           max-width: 60px;
           height: auto;
         }
+        
         .gradient-text {
           font-weight: 800;
           background-image: linear-gradient(to right, #614385 , #516395, #02aab0, #00cdac, #004e92, #000428);
@@ -46,17 +52,78 @@
           color: transparent;
           animation: gradient-bg 3s linear infinite alternate;
         }
+        
         .gradient-text:hover {
           color: transparent;
         }
+        
         .post-cover {
           width: 100%;
           height: auto;
           animation: cover-scale 1s;
         }
+        
+        .hashtag,
+        .hashtag:hover {
+          color: black;
+        }
+
+        .post-header {
+          position: relative;
+          z-index: 1;
+          width: max-content;
+        }
+        
+        .post-header::before {
+          content: '';
+          position: absolute;
+          right: 0;
+          left: 0;
+          height: 3px;
+          bottom: 0;
+          background-color: #FFBF00;
+          z-index: -1;
+          transform: scaleX(0);
+          transform-origin: right;
+          transition: transform 250ms ease-in;
+        }
+
+        .post-header:hover::before {
+          transform: scaleX(1);
+          transform-origin: left;
+          transition: transform 250ms ease-out;
+        }
+
+        .post-header:hover .post-cover {
+          border: 122px solid black;
+        }
         p {
           font-size: 20px;
         }
+        
+        ::selection {
+          color: black;
+          background: #e9ecef;
+        }
+
+        .lead {
+          animation: 1s ease-in 0.5s 1 translate-from-left;
+        }
+
+        .display-4 {
+          animation: 1s ease-in 0s 1 translate-from-left;
+        }
+
+        @keyframes translate-from-left {
+          from {
+            transform: translateX(-15%);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
         @keyframes gradient-bg {
           from {
             background-position: left;
@@ -71,12 +138,13 @@
             transform: scale(1);
           }
           50% {
-          transform: scale(.8);
+          transform: scale(.85);
           }
           100% {
             transform: scale(1);
           }
         }
+        
         @media only screen and (max-width: 768px) {
           .container {
             width: 100%;
@@ -95,16 +163,14 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="{% url 'home' %}"><video width="160" height="100" autoplay>
-<source src="{% static 'blog-logo.mp4' %}" type="video/mp4">
-</video><span class="sr-only">(current)</span></a>
+  <a class="navbar-brand" href="{% url 'home' %}">Art & Movie</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       {% for category in categories %}
-      <a class="nav-link" href="{% url 'category' category.id %}">{{ category }}</a>
+        <a class="nav-link" href="{% url 'category' category.id %}">{{ category }}</a>
       {% endfor %}
     </div>
   </div>
