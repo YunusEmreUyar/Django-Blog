@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'users.apps.UsersConfig',
     'rest_framework',
+    'corsheaders',
     'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -56,9 +57,16 @@ REST_FRAMEWORK = {
 }
 """
 
+CORS_ALLOW_METHODS = [
+    "GET"
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
