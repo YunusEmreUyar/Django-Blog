@@ -34,10 +34,12 @@ ALLOWED_HOSTS = ["artandmovieisnotgonnabethename.herokuapp.com", "127.0.0.1"]
 
 INSTALLED_APPS = [
     'blog_post.apps.BlogPostConfig',
+    'api.apps.ApiConfig',
     'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
     'users.apps.UsersConfig',
+    'rest_framework',
     'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +48,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+"""
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+"""
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
