@@ -24,12 +24,12 @@ class PartialUserSerializer(serializers.ModelSerializer):
 	profile = ProfileSerializer(many=False, read_only=True)
 	class Meta:
 		model = User
-		fields = ['username', 'profile']
+		fields = ['username', 'profile', 'id']
 
 
 class PostSerializer(serializers.ModelSerializer):
 	author = PartialUserSerializer(many=False, read_only=True)
-	#content = strip_tags(content)
+	category = CategorySerializer(many=False, read_only=True)
 
 	class Meta:
 		model = Post

@@ -55,17 +55,14 @@ class articleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
 
-        comments = Comment.objects.filter(
-            post = self.get_object()).order_by('-created_at')
+        comments = Comment.objects.filter(post = self.get_object()).order_by('-created_at')
         data['comments'] = comments
         if self.request.user.is_authenticated:
             data['comment_form'] = CommentForm(instance=self.request.user)
         return data
 
     def post(self, request, *args, **kwargs):
-        new_comment = Comment(content=request.POST.get('content'),
-                              created_by=self.request.user,
-                              post=self.get_object())
+        new_comment = Comment(content=request.POST.get('content'),created_by=self.request.user,post=self.get_object())
         new_comment.save()
         return self.get(self, request, *args, **kwargs)
 

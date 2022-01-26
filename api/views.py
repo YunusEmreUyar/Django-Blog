@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -9,9 +9,9 @@ from rest_framework import status
 from blog_post.models import Category, Post
 from .serializers import (
 	CategorySerializer,
- 	PostSerializer, 
-	PartialUserSerializer, 
-	ProfileSerializer, 
+ 	PostSerializer,
+	PartialUserSerializer,
+	ProfileSerializer,
 	PostSerializer)
 
 def homeView(request):
@@ -22,6 +22,8 @@ def homeView(request):
 			<int:id>/ Get 1 category object that has the id.
 		post/
 			/ Returns list of all post items.
+			/<int:id>/ Returns a post item that has id given to url.
+			/by/category/<int:id>/ Get 1 post with category number given to url.
 	"""
 	return HttpResponse(content, 200)
 
@@ -64,3 +66,14 @@ class GetPost(APIView):
 		post = get_object_or_404(Post, pk=pk)
 		serializer = PostSerializer(post, many=False)
 		return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class PostListByCategory(APIView):
+	"""
+	Get post list from given category.
+	"""
+	def get(self, request, pk, format=None):
+		posts = get_list_or_404(Post, category=pk)
+		serializer = PostSerializer(posts, many=True)
+		return Response(serializer.data, status=status.HTTP_200_OK)
+

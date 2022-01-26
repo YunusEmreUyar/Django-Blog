@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import homeView, CategoryList, GetCategory, PostList, GetPost
+from .views import homeView, CategoryList, GetCategory, PostList, GetPost, PostListByCategory
 
 urlpatterns = [
 	path('', homeView, name='apiHome'),
@@ -7,4 +7,5 @@ urlpatterns = [
 	path('category/<int:pk>', GetCategory.as_view()),
 	path('post/', PostList.as_view()),
 	path('post/<int:pk>', GetPost.as_view()),
+	path('post/by/category/<int:pk>', PostListByCategory.as_view()),
 ]
