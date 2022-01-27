@@ -24,6 +24,7 @@ def homeView(request):
 			/ Returns list of all post items.
 			/<int:id>/ Returns a post item that has id given to url.
 			/by/category/<int:id>/ Get 1 post with category number given to url.
+			/by/author/<int:id>/ Get all posts of author given in url.
 	"""
 	return HttpResponse(content, 200)
 
@@ -70,10 +71,19 @@ class GetPost(APIView):
 
 class PostListByCategory(APIView):
 	"""
-	Get post list from given category.
+	Get posts list from given category.
 	"""
 	def get(self, request, pk, format=None):
 		posts = get_list_or_404(Post, category=pk)
 		serializer = PostSerializer(posts, many=True)
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+class PostListByAuthor(APIView):
+	"""
+	Get posts list of given author.
+	"""
+	def get(self, request, pk, format=None):
+		posts = get_list_or_404(Post, author=pk)
+		serializer = PostSerializer(posts, many=True)
+		return Response(serializer.data, status=status.HTTP_200_OK)
