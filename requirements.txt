@@ -26,4 +26,4 @@ sqlparse==0.4.2
 threadpoolctl==3.0.0
 tomli==1.2.2
 urllib3==1.26.7
-whitenoise==3.3.1
+whitenoise==5.0.1
