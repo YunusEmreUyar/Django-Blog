@@ -98,16 +98,25 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-if not os.environ["DEBUG_MODE"]:
-    import dj_database_url
-    DATABASES['default'].update(dj_database_url.config(conn_max_age=600, ssl_require=True))
+"""
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd22fn2canc5r7b',
+        'USER': 'sqqjjladmutfiq',
+        'PASSWORD': os.environ["DATABASE_PWD"],
+        'HOST': 'ec2-79-125-86-58.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
