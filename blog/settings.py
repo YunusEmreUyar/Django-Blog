@@ -109,7 +109,7 @@ DATABASES = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'd22fn2canc5r7b',
         'USER': 'sqqjjladmutfiq',
         'PASSWORD': os.environ["DATABASE_PWD"],
