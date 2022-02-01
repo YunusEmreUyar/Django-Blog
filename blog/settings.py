@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '4+itcgq)%2+crlvkm1v14%u)#g7^n0z$az_-z&x-uqv6+8)v+s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ["DEBUG_MODE"]
+DEBUG = bool(os.environ["DEBUG_MODE"])
+
 
 ALLOWED_HOSTS = ["artandmovieisnotgonnabethename.herokuapp.com", "127.0.0.1"]
 
@@ -99,6 +100,10 @@ DATABASES = {
     }
 }
 
+if not DEBUG:
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config()
+
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -128,7 +133,7 @@ LANGUAGE_CODE = 'tr'
 
 TIME_ZONE = 'Europe/Istanbul'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_L10N = True
 
