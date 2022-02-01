@@ -13,6 +13,8 @@ from .serializers import (
 	PartialUserSerializer,
 	ProfileSerializer,
 	PostSerializer)
+from rest_framework.permissions import IsAuthenticated
+
 
 def homeView(request):
 	content = """
@@ -54,7 +56,7 @@ class PostList(APIView):
 	Get all posts
 	"""
 	def get(self, request, format=None):
-		posts = Post.objects.all()
+		posts = Post.objects.all().order_by('-date_created')
 		serializer = PostSerializer(posts, many=True)
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
