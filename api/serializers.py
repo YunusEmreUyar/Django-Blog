@@ -39,3 +39,10 @@ class PostSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Post
 		fields = '__all__'
+
+class CommentSerializer(serializers.ModelSerializer):
+	created_by = PartialUserSerializer(many=False, read_only=True)
+
+	class Meta:
+		model = Comment
+		fields = '__all__'
