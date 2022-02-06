@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import register, profile
+from .views import register, profile, activate
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -10,4 +10,5 @@ urlpatterns = [
     path('password-reset/done/',auth_views.PasswordResetDoneView.as_view(template_name='resetting/password_reset_done.html'),name='password_reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name='resetting/password_reset_confirm.html'),name='password_reset_confirm'),
     path('password-reset-complete/',auth_views.PasswordResetCompleteView.as_view(template_name='resetting/password_reset_complete.html'),name='password_reset_complete'),
+    path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', activate, name='activate'),
 ]
