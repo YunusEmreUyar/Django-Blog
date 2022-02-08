@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'blog_post.apps.BlogPostConfig',
     'api.apps.ApiConfig',
     'crispy_forms',
+    'crispy_forms_materialize',
     'ckeditor',
     'ckeditor_uploader',
     'users.apps.UsersConfig',
@@ -176,7 +177,7 @@ MEDIA_ROOT = "media/"
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'materialize_css_forms'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

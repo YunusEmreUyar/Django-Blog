@@ -2,21 +2,40 @@
 {% load crispy_forms_tags %}
 
 {% block title %}Giriş yap{% endblock %}
+
+{% block style %}
+	<style type="text/css">
+		.inner-form {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			gap:  20px;
+			margin-top: 30px;
+		}
+
+	</style>
+{% endblock %}
+
+
+
 {% block main %}
 <br><br>
 
 <div class="container container-fluid">
+	<h1>Giriş yap</h1>
 	<form method="POST">
 		{% csrf_token %}
 		<fieldset class="form-group">
 			{{ form | crispy }}
 		</fieldset>
-		<div class="form-group">
+		<div class="inner-form">
+			<div>
 			<button class="btn btn-info" type="submit">Giriş Yap</button><br>
 			<a href="{% url 'register' %}"><small>Hala bir hesabın yok mu?</small></a><br>
 			<a href="{% url 'password_reset' %}"><small>Şifremi unuttum.</small></a>
+		</div>	
 		</div>
+		
 	</form>
 </div>
-<br><br><br><br><br>
 {% endblock main %}

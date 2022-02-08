@@ -7,22 +7,35 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4">{{ category.category.name }} kategorisi altındaki yazılar</h1>
-
+    <img src="{{category.image.url}}">
   </div>
 </div>
-<div class="mx-auto">
+<div>
   {% for post in posts %}
     <div class="container container-fluid">
-        {% if post.cover %}
-          <a href="{% url 'article-detail' post.pk %}"><img src={{post.cover.url}} class="card-img-top post-cover"></a>
-        {% else %}
-          <a href="{% url 'article-detail' post.pk %}"><img src="{% static 'default-movie.jpg' %}" class="card-img-top post-cover"></a>
-        {% endif %}
-        <div><h1 class="post-header">{{ post.title }}</h1></div>
-        <a href="{% url 'author' post.author.id %}">{{ post.author }}</a> yazdı.<p>Tahmini okuma süresi: {{ post.estimated_reading_time }} dakika.</p>
-        <p>{{ post.description }}</p>
-        <p align="right"><small>{{ post.date_created | naturaltime }}</small></p><hr>
-    </div>
+
+         <div class="card">
+          <div class="card-image">
+            {% if post.cover %}
+              <img src={{post.cover.url}} class="card-img-top post-cover">
+            {% else %}
+              <a href="{% url 'article-detail' post.pk %}"><img src="{% static 'default-movie.jpg' %}" class="card-img-top post-cover"></a>
+            {% endif %}
+            <span class="card-title post-header">{{post.title}}</span>
+          </div>
+          <div class="card-content">
+            <div class="card-content-meta">
+              <p><small>{{ post.date_created | naturaltime }}</small></p>
+              <p><small>Tahmini okuma süresi: {{ post.estimated_reading_time }} dakika.</small></p>
+            </div>
+            <p>{{post.description}}</p>
+          </div>
+          <div class="card-action">
+            <a href="{% url 'author' post.author.id %}">{{ post.author }}</a>
+            <a href="{% url 'article-detail' post.pk %}">Yazının tamamı</a>
+          </div>
+        </div>
+      </div>
     {% endfor %}
 </div>
 

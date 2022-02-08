@@ -9,8 +9,10 @@
   <div class="container">
     <h1 class="display-4">{{ post.title|safe }}</h1>
     <p class="lead">{{ post.description }}</p>
-    <p class="lead">{{post.date_created}} tarihinde paylaşıldı.</p>
-    <p class="lead">Tahmini okuma süresi: {{ post.estimated_reading_time }} dakika.</p>
+    <div class="card-content-meta">
+      <p class="lead">{{post.date_created}} tarihinde paylaşıldı.</p>
+      <p class="lead">Tahmini okuma süresi: {{ post.estimated_reading_time }} dakika.</p>
+    </div>
   </div>
 </div>
 
@@ -29,12 +31,10 @@
         {% else %}
         <a type="submit" id="like_" data-href="{{ post.get_api_like_url }}" href='{{ post.get_like_url }}' class="btn btn-primary"><i class="fa fa-thumbs-up"> Beğen</i></a>
         {% endif %}
-      </form>
     {% else %}
       <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}"><small>Beğenmek için giriş yap.</small></a><br>
     {% endif %}
   </div>
-<br>
 </div>
 
 <script>
@@ -60,13 +60,12 @@ $(document).ready(function() {
 </script>
 
 <div class="container container-fluid">
-  <hr>
   <div class="row">
     <div class="col">
       {% if post.author.profile.profile_pic %}
         <img src="{{ post.author.profile.profile_pic.url }}" class="rounded-circle profile float-left">
       {% else %}
-        <img src="{% static 'default-profile.jpg' %}"  class="rounded-circle float-left profile">
+        <img src="{% static 'default-profile.png' %}"  class="rounded-circle float-left profile">
       {% endif %}
       <p style="margin-left:5px;">{{ post.author.profile.description }}</p>
       <p>
@@ -79,7 +78,6 @@ $(document).ready(function() {
       </p>
     </div>
   </div>
-  <hr>
 </div>
 <br>
 
@@ -88,29 +86,29 @@ $(document).ready(function() {
 
 <br><br>
   {% if comments %}
-  <h2 class="text-secondary">{{ post.title }} için yorumlar</h2>
-  <hr>
+  <h4 class="text-secondary">{{ post.title }} için yorumlar</h4><hr>
     {% for comment in comments %}
-      <div class="container container-fluid">
+      <div class="comment">
         <span>
           {% if comment.created_by.profile.profile_pic %}
             <img src="{{ comment.created_by.profile.profile_pic.url }}" class="float-left rounded-circle comment-img">
           {% else %}
-            <img src="{% static 'default-profile.jpg' %}" class="comment-img float-left rounded-circle">
+            <img src="{% static 'default-profile.png' %}" class="comment-img float-left rounded-circle">
           {% endif %}
-          <strong class="text-info">{{ comment.created_by }}</strong>
-          <small class="text-muted">{{ comment.created_at }}</small>
+          <div class="comment-content-meta">
+            <strong class="text-info">{{ comment.created_by }}</strong>
+            <small class="text-muted">{{ comment.created_at }}</small>
+          </div>
         </span>
         <p>{{ comment.content|safe }}</p>
       </div>
-      <hr>
     {% endfor %}
   {% else %}
     <strong class="text-secondary">Henüz hiçbir yorum yok.</strong><br><br>
   {% endif %}
   {% if user.is_authenticated %}
   <br><br>
-  <h2 class="text-secondary">{{ post.title }} için bir yorum bırak.</h2><br><br>
+  <h4 class="text-secondary">{{ post.title }} için bir yorum bırak.</h4>
   <form method="POST" id="comment_form">
     {% csrf_token %}
     <div class="form-group">

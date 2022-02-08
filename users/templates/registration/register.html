@@ -2,24 +2,48 @@
 {% load crispy_forms_tags %}
 
 {% block title %}Kayıt ol{% endblock %}
+
+{% block style %}
+	<style type="text/css">
+		.form {
+			display: flex;
+			flex-wrap: nowrap;
+			direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+		.inner-form {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			gap:  20px;
+		}
+
+	</style>
+{% endblock %}
+
+
 {% block main %}
 <br><br>
-
 <div class="container container-fluid">
-	<form method="POST">
+	
+	<h1>Kayıt Ol</h1>
+	<form class="form" method="POST">
 		{% csrf_token %}
 		<fieldset class="form-group mr-3 ml-3">
 			{{ form| crispy }}
 		</fieldset>
-		<div class="form-group">
-			<button class="btn btn-outline-info ml-3" type="submit">Kayıt Ol</button>
+		<div class="inner-form">
+			<div class="form-group">
+				<button class="btn btn-outline-info ml-3" type="submit">Kayıt Ol</button>
+			</div>
+			<div class="border-top pt-3 ml-3">
+				<small class="text-muted">
+					Zaten bir hesabın var mı? <a href="{% url 'login' %}">Giriş Yap</a>
+				</small>
+			</div>
 		</div>
 	</form>
-	<div class="border-top pt-3 ml-3">
-		<small class="text-muted">
-			Zaten bir hesabın var mı? <a href="{% url 'login' %}">Giriş Yap</a>
-		</small>
-	</div>
 </div>
 <br><br>
 {% endblock main %}
