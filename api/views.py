@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth.models import User
 from django.utils.html import strip_tags
 from users.models import Profile
@@ -16,7 +16,8 @@ from .serializers import (
 	PartialUserSerializer,
 	ProfileSerializer,
 	PostSerializer,
-	CommentSerializer)
+	CommentSerializer,
+	RegisterSerializer)
 
 
 def homeView(request):
@@ -43,6 +44,8 @@ def homeView(request):
 		like/
 			/<int:postId>/ Updates post like field of the post that has given id. 
 			Takes userId and postId to like.
+		register/
+			/ Registers a new user object with given username, password, password2 and email.
 	"""
 	return HttpResponse(content, 200)
 
@@ -164,3 +167,9 @@ class CreateComment(APIView):
 			comment.save()
 			return Response(comment)
 		return Response({"detail": "Wrong input"})
+
+
+class RegisterView(CreateAPIView):
+	queryset = User.objects.all()
+	permission_classes = (AllowAny,)
+	serializer_class = RegisterSerializer

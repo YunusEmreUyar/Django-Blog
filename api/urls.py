@@ -11,7 +11,8 @@ from .views import (
 	GetAllCommentsToGivenPost,
 	LikePost,
 	GetUserByUsername,
-	CreateComment
+	CreateComment,
+	RegisterView
 	)
 
 urlpatterns = [
@@ -28,4 +29,5 @@ urlpatterns = [
     path('like/<int:postId>', LikePost.as_view()),
     path('user/<str:username>', GetUserByUsername.as_view()),
     path('comment/<int:pk>', CreateComment.as_view()),
+    path('register/', RegisterView.as_view())
 ]
