@@ -28,6 +28,6 @@ urlpatterns = [
     path('comment/<int:pk>', GetAllCommentsToGivenPost.as_view()),
     path('like/<int:postId>', LikePost.as_view()),
     path('user/<str:username>', GetUserByUsername.as_view()),
-    path('comment/<int:pk>', CreateComment.as_view()),
+    path('comment/create/<int:pk>', CreateComment.as_view()),
     path('register/', RegisterView.as_view())
 ]
