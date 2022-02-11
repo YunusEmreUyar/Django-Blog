@@ -162,10 +162,11 @@ class CreateComment(APIView):
 		post = get_object_or_404(Post, pk=pk)
 		user = self.request.user
 		data = self.request.data
-		if data.content:
-			comment = Comment(post=post, created_by=user, content=data.content)
+		if data.get("content"):
+			comment = Comment(post=post, created_by=user, content=data.get("content"))
 			comment.save()
-			return Response(comment)
+			serializer = CommentSerializer(comment, many=False)
+			return Response(serializer.data)
 		return Response({"detail": "Wrong input"})
 
 

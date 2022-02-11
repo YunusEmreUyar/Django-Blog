@@ -100,7 +100,7 @@ $(document).ready(function() {
             <small class="text-muted">{{ comment.created_at }}</small>
           </div>
         </span>
-        <p>{{ comment.content|safe }}</p>
+        <p>{{ comment.content|linebreaks }}</p>
       </div>
     {% endfor %}
   {% else %}
