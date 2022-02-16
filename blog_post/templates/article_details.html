@@ -5,7 +5,6 @@
 
 {% block main %}
 
-<div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4">{{ post.title|safe }}</h1>
     <p class="lead">{{ post.description }}</p>
@@ -14,7 +13,6 @@
       <p class="lead">Tahmini okuma süresi: {{ post.estimated_reading_time }} dakika.</p>
     </div>
   </div>
-</div>
 
 <div class="container container-fluid mt-5 mb-5">
   {% if post.cover %}

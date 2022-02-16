@@ -6,11 +6,12 @@
 
   <style type="text/css">
     .profile-pic {
-      width: 300px;
+      width: 50%;
       height: auto;
     }
     .container {
       display: flex;
+      flex-wrap: wrap;
       flex-direction: row;
       justify-content: center;
       align-items: center;
@@ -20,27 +21,26 @@
   </style>
 
 
-  <div>
-    <div class="container">
-      {% if user.profile.profile_pic %}
-        <img class="rounded float-left profile-pic" src="{{ user.profile.profile_pic.url }}">
-      {% else %}
-        <img src="{% static 'default-profile.png' %}" class="float-left rounded profile-pic">
-      {% endif %}
-      <h1>{{ user.username }}</h1>
-    </div>
-  </div><br><br>
-    <div class="container container-fluid">
-      <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-        </br><fieldset class="form-group">
-              <legend class="border-bottom mb-4">Profil Bilgileri</legend>
-              {{ user_form|crispy }}
-              {{ profile_form|crispy }}
-          </fieldset>
-          <div class="form-group" style="margin-top: 20px">
-              <button class="btn btn-outline-info" type="submit">Güncelle</button>
-          </div>
-      </form>
-    </div><br>
+  <div class="container">
+    {% if user.profile.profile_pic %}
+      <img class="rounded float-left profile-pic" src="{{ user.profile.profile_pic.url }}">
+    {% else %}
+      <img src="{% static 'default-profile.png' %}" class="float-left rounded profile-pic">
+    {% endif %}
+    <h1>{{ user.username }}</h1>
+  </div>
+  <br><br>
+  <div class="container container-fluid">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      </br><fieldset class="form-group">
+            <legend class="border-bottom mb-4">Profil Bilgileri</legend>
+            {{ user_form|crispy }}
+            {{ profile_form|crispy }}
+        </fieldset>
+        <div class="form-group" style="margin-top: 20px">
+            <button class="btn btn-outline-info" type="submit">Güncelle</button>
+        </div>
+    </form>
+  </div><br>
 {% endblock main %}

@@ -6,10 +6,14 @@
 {% block style %}
   <style type="text/css">
     .hero {
-      width: 100%;
+      min-width: 100%;
+      min-height: 100vh;
       height: auto;
-      max-height: 100vh;
-      object-fit: cover;
+      position: relative;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-color: black;
+      background-image: url("{% static 'hero-pc.jpg' %}");
     }
 
     .sidenav-trigger {
@@ -28,6 +32,8 @@
     .hero-h1 {
       position: absolute;
       top: 25%;
+      left: 10%;
+      text-shadow: 2px 2px #000;
     }
 
     .parallax-container {
@@ -35,13 +41,22 @@
     }
 
     .hero-p {
+      text-shadow: 2px 2px #000;
       position: absolute;
       top: 45%;
+      left: 10%;
     }
 
     @media only screen and (max-width: 768px) {
       .hero-h1 {
         font-size: 28px;
+      }
+      .hero {
+        background-image: url("{% static 'hero-mobile.jpg' %}");
+      }
+
+      .hero-p {
+        top: 35%;
       }
     }
 
@@ -51,15 +66,16 @@
 {% block main %}
 
   <div class="hero-wrapper">
-    <img class="hero" src="{% static 'hero.jpg' %}">
-    <h1 class="hero-h1">About this blog</h1>
-    <p class="hero-p">Also try our mobile app.</p>
+    <div class="hero">
+      <h1 class="hero-h1">Pencere blog</h1>
+      <p class="hero-p">Bilim, mühendislik ve insan üzerine kendime notlar.</p>
+    </div>
   </div>
 
 <br><br>
   <div>
     <div class="container">
-      <h1>Blog Posts</h1>
+      <h1>Gönderiler</h1>
     </div>
     {% for post in object_list %}
       <div class="container container-fluid">
