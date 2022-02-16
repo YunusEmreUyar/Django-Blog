@@ -43,7 +43,6 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    id = models.BigIntegerField(primary_key=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
