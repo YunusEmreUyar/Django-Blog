@@ -148,7 +148,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'tr-tr'
+LANGUAGE_CODE = 'tr-TR'
 
 TIME_ZONE = 'Europe/Istanbul'
 
@@ -165,7 +165,7 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = 'static/'
 """
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
