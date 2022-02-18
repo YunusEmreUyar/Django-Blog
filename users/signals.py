@@ -13,7 +13,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 def create_profile(sender, instance, created, **kwargs):
     if created:
         model_dict = model_to_dict(instance)
-        current_site = "http://pencereblog.herokuapp.com"
+        current_site = "https://pencereblog.herokuapp.com"
         mail_subject = 'Hesabınızı aktif ediniz.'
         message = render_to_string('acc_active_email.html', {
             'user': instance,
