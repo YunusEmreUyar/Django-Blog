@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '4+itcgq)%2+crlvkm1v1490^+^+u)#g7^n0z$az_-z&x-uqv6+8)v+s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG_MODE", True)
+DEBUG = True
 
 
 ALLOWED_HOSTS = ["pencereblog.herokuapp.com", "127.0.0.1"]
@@ -118,10 +118,11 @@ DATABASES = {
     }
 }
 
+"""
 if not DEBUG:
     import dj_database_url
     DATABASES['default'] = dj_database_url.config()
-
+"""
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -147,13 +148,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'tr'
+LANGUAGE_CODE = 'tr-tr'
 
 TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = False
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
