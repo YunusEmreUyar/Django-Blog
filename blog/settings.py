@@ -166,9 +166,11 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 STATIC_URL = 'static/'
 STATIC_ROOT = 'staticfiles'
+"""
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+"""
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
