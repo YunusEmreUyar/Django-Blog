@@ -7,6 +7,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.http import HttpResponse
+from django.utils.encoding import force_bytes, force_text
 
 def register(request):
     if request.method == 'POST':
