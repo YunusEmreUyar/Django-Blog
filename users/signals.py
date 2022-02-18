@@ -12,10 +12,9 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        print("----------------------------------------------")
         model_dict = model_to_dict(instance)
-        current_site = "http://artandmovieisnotgonnabethename.herokuapp.com"
-        mail_subject = 'Activate your account.'
+        current_site = "http://pencereblog.herokuapp.com"
+        mail_subject = 'Hesabınızı aktif ediniz.'
         message = render_to_string('acc_active_email.html', {
             'user': instance,
             'domain': current_site,
@@ -27,7 +26,6 @@ def create_profile(sender, instance, created, **kwargs):
         email.send()
         Profile.objects.create(user=instance)
         
-
 
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, **kwargs):
