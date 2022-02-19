@@ -16,7 +16,7 @@ def register(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            return HttpResponse('Kaydınızı tamamlamak için lütfen mailinizi onaylayınız.')
     else:
         form = UserRegisterForm()
     return render(request, 'registration/register.html', {'form': form})
@@ -51,4 +51,4 @@ def activate(request, uidb64, token):
         login(request, user)
         return redirect('home')
     else:
-        return HttpResponse(f'Activation link is invalid!\n user is {user}')
+        return HttpResponse('Aktivasyon linkinin süresi geçmiş!')
