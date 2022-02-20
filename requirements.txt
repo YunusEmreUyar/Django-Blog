@@ -28,4 +28,4 @@ threadpoolctl==3.0.0
 tomli==1.2.2
 urllib3==1.26.7
 djangorestframework_simplejwt==5.0.0
-pyjwt==2.3.0
+pyjwt==2.3.0python-dotenv
