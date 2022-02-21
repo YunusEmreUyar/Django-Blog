@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
-
+from django.contrib import messages
 
 class PostLikeView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
@@ -39,6 +39,7 @@ class PostLikeApiView(APIView):
                 obj.likes.add(user)
             updated = True
         data = {"updated": updated, "liked": liked}
+        messages.success(request, "Beğenme işlemi başarıyla sonuçlandı.")
         return Response(data)
 
 
@@ -64,6 +65,7 @@ class articleDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         new_comment = Comment(content=request.POST.get('content'),created_by=self.request.user,post=self.get_object())
         new_comment.save()
+        messages.success(request, "Yorum başarılı bir şekilde yapıldı.")
         return self.get(self, request, *args, **kwargs)
 
 def categoryView(request, id):

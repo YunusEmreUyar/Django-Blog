@@ -10,10 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;1,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="icon" href="{% static 'icon.png' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <title>{% block title %} {% endblock %}</title>
     <script src="https://use.fontawesome.com/3a18b9b449.js"></script>
-    
+
     <style type="text/css">
 
         .page-footer {
@@ -38,24 +39,33 @@
         .card-list-item {
           margin-top: 50px;
         }
-        
+
         body {
           font-family: 'Montserrat', sans-serif;
           background-color: #f0f2f5;
           min-height: 100vh;
+
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          overflow-y: scroll;
+
         }
-        
+
+        body::-webkit-scrollbar {
+          display: none; /* for Chrome, Safari, and Opera */
+        }
+
         .profile {
           max-width: 100px;
           height: auto;
           border-radius: 50%;
         }
-        
+
         .comment-img {
           max-width: 60px;
           height: auto;
         }
-        
+
         .gradient-text {
           font-weight: 800;
           background-image: linear-gradient(to right, #614385 , #516395, #02aab0, #00cdac, #004e92, #000428);
@@ -66,17 +76,17 @@
           color: transparent;
           animation: gradient-bg 3s linear infinite alternate;
         }
-        
+
         .gradient-text:hover {
           color: transparent;
         }
-        
+
         .post-cover {
           width: 100%;
           height: auto;
           animation: cover-scale 1s;
         }
-        
+
         .card-hashtag {
           position: absolute;
           top: 10;
@@ -110,7 +120,7 @@
           width: max-content;
           font-weight: 400;
         }
-        
+
         .post-header::before {
           content: '';
           position: absolute;
@@ -145,7 +155,7 @@
         p {
           font-size: 20px;
         }
-        
+
         ::selection {
           color: black;
           background: #FFBF00;
@@ -176,7 +186,7 @@
             transform: scale(1);
           }
         }
-        
+
         @media only screen and (max-width: 768px) {
           .container {
             width: 100%;
@@ -217,7 +227,7 @@
       {% endfor %}
     </ul>
 
-    <a href="#" data-target="slide-out" class="sidenav-trigger" id="trigger"><i class="fa fa-bars fa-2x"></i></a>      
+    <a href="#" data-target="slide-out" class="sidenav-trigger" id="trigger"><i class="fa fa-bars fa-2x"></i></a>
 
     {% block main %}
     {% endblock %}
@@ -226,15 +236,24 @@
          M.AutoInit();
       </script>
 
+
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                M.toast({html:"{{ message }}"});
+            </script>
+        {% endfor %}
+    {% endif %}
+
      <footer class="page-footer">
         <div class="container">
           <div class="row">
             <div class="col l6 s12">
               <h5 class="white-text">Uygulama hakkında</h5>
-              <p class="grey-text text-lighten-4">Blog kaynka koduna yandaki github linki üzerinden ulaşabilirsiniz.</p>
+              <p class="grey-text text-lighten-4">Blog kaynak koduna yandaki github bağlantısı üzerinden ulaşabilirsiniz.</p>
             </div>
             <div class="col l4 offset-l2 s12">
-              <h5 class="white-text">Links</h5>
+              <h5 class="white-text">Bağlantılar</h5>
               <ul>
                 <li>
                   <a class="grey-text text-lighten-3" href="https://github.com/YunusEmreUyar">Github</a>

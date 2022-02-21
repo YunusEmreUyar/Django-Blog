@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.http import HttpResponse
 from django.utils.encoding import force_bytes, force_text
+from django.contrib import messages
+
 
 def register(request):
     if request.method == 'POST':
@@ -29,6 +31,7 @@ def profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            messages.success(request, "Profil başarıyla güncellendi.")
             return redirect('profile')
 
     else:
@@ -49,6 +52,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
+        messages.success(request, "Kayıt başarılı, giriş yapıldı.")
         return redirect('home')
     else:
         return HttpResponse('Aktivasyon linkinin süresi geçmiş!')

@@ -17,7 +17,7 @@
          <div class="card">
           <div class="card-image">
             {% if post.cover %}
-              <img src={{post.cover.url}} class="card-img-top post-cover">
+              <img loading="lazy" alt="{{post.title}}" src={{post.cover.url}} class="card-img-top post-cover">
             {% else %}
               <a href="{% url 'article-detail' post.pk %}"><img src="{% static 'default-movie.jpg' %}" class="card-img-top post-cover"></a>
             {% endif %}

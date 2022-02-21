@@ -18,7 +18,7 @@ def create_profile(sender, instance, created, **kwargs):
         message = render_to_string('acc_active_email.html', {
             'user': instance,
             'domain': current_site,
-            'uid':urlsafe_base64_encode(force_bytes(instance.pk)),
+            'uid':urlsafe_base64_encode(force_bytes(instance.id)),
             'token':account_activation_token.make_token(instance),
         })
         to_email = model_dict["email"]
