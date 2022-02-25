@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, RedirectView
 from django.views.generic.edit import FormView
 from .models import Post, Category, Comment
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from .forms import CommentForm
 from django.contrib.auth.models import User
@@ -10,6 +10,17 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from django.contrib import messages
+
+def robotsView(request):
+    text = """
+User-Agent: *
+
+Disallow: /api/
+
+Sitemap: https://pencereblog.pythonanywhere.com/sitemap.xml
+    """
+    return HttpResponse(text, content_type="text/plain")
+
 
 class PostLikeView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
