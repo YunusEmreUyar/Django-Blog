@@ -42,7 +42,7 @@ class Post(models.Model):
     def get_like_url(self):
         return reverse("like_post", kwargs={"pk":self.pk})
 
-     class Meta:
+    class Meta:
         verbose_name = 'Gönderi'
         verbose_name_plural = 'Gönderiler'
 
