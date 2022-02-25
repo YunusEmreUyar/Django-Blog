@@ -23,3 +23,7 @@ class Profile(models.Model):
                 output_size = (400, 400)
                 img.thumbnail(output_size, Image.ANTIALIAS)
                 img.save(self.profile_pic.path)
+
+     class Meta:
+        verbose_name = 'Profil'
+        verbose_name_plural = 'Profiller'

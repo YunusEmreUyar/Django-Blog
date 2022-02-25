@@ -42,6 +42,10 @@ class Post(models.Model):
     def get_like_url(self):
         return reverse("like_post", kwargs={"pk":self.pk})
 
+     class Meta:
+        verbose_name = 'Gönderi'
+        verbose_name_plural = 'Gönderiler'
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
@@ -51,3 +55,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return f" {self.post.title} | {self.content}"
+
+     class Meta:
+        verbose_name = 'Yorum'
+        verbose_name_plural = 'Yorumlar'
