@@ -56,6 +56,6 @@ class Comment(models.Model):
     def __str__(self):
         return f" {self.post.title} | {self.content}"
 
-     class Meta:
+    class Meta:
         verbose_name = 'Yorum'
         verbose_name_plural = 'Yorumlar'
