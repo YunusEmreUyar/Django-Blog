@@ -2,7 +2,7 @@
 
 This project was made to learn Django.
 
-You can try it out from: http://artandmovieisnotgonnabethename.herokuapp.com/ .
+You can try it out from: https://pencereblog.pythonanywhere.com/ .
 
 Notable Features:<br>
   &nbsp;&nbsp;Session authentication,<br>
