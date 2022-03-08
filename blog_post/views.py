@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, RedirectView
 from django.views.generic.edit import FormView
+from django.db.models import Count
 from .models import Post, Category, Comment
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -10,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from django.contrib import messages
+from taggit.models import Tag
 
 def robotsView(request):
     text = """
@@ -54,12 +56,23 @@ class PostLikeApiView(APIView):
         return Response(data)
 
 
-class homeView(ListView):
+class HomeView(ListView):
     model = Post
     template_name = 'home.html'
     ordering = ['-date_created']
 
-class articleDetailView(DetailView):
+
+def homeView(request, tag_slug=None):
+    posts = Post.objects.all()
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = Post.objects.filter(tags__in=[tag])
+    return render(request, "home.html", {"posts": posts, "tag":tag})
+
+
+class ArticleDetailView(DetailView):
     model = Post
     template_name = 'article_details.html'
     ordering = ['-date_created']
@@ -69,8 +82,14 @@ class articleDetailView(DetailView):
 
         comments = Comment.objects.filter(post = self.get_object()).order_by('-created_at')
         data['comments'] = comments
+
         if self.request.user.is_authenticated:
             data['comment_form'] = CommentForm(instance=self.request.user)
+        
+        post_tags_ids = self.object.tags.values_list('id', flat=True)
+        similar_posts = Post.objects.filter(tags__in=post_tags_ids).exclude(id=self.object.id)
+        data["similar_posts"] = similar_posts.annotate(same_tags=Count("tags")).order_by("-same_tags")[:6]
+
         return data
 
     def post(self, request, *args, **kwargs):

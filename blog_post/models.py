@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.conf import settings
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 
 class Category(models.Model):
@@ -19,6 +20,19 @@ class Category(models.Model):
         return self.name
 
 
+class PostSeries(models.Model):
+    name = models.CharField(max_length=255)
+    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = "Gönderi Serisi"
+        verbose_name_plural = "Gönderi Serileri"
+
+
 class Post(models.Model):
     title = models.CharField(max_length=255)
     content = RichTextUploadingField()
@@ -29,6 +43,8 @@ class Post(models.Model):
     cover = models.ImageField(upload_to="static/covers", blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, blank=True, related_name='likes')
+    series = models.ForeignKey(PostSeries, null=True, blank=True, on_delete=models.SET_NULL)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title
