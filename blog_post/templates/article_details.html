@@ -43,8 +43,8 @@
     </div>
   </div>
   <div class="col s12 m3 l3">
-    <div class="collection" style="padding: 10px;">
-      <p>Benzer gönderiler</p>
+    <div id="collection" class="collection with-header" style="padding: 10px;background-color: #fff;">
+      <p class="collection-header">Benzer gönderiler</p>
       {% for post in similar_posts %}
         <a class="black-text" href="{% url 'article-detail' post.pk %}">{{post.title}}</a><hr>
       {% empty %}
@@ -55,11 +55,28 @@
 </div>
 
 <script>
+  
+  var collection = document.getElementById("collection");
+  var sticky = collection.offsetTop;
+  console.log(screen.width, typeof(screen.width));
+  window.onscroll = function() {
+    if (screen.width > 900) {
+      if (window.pageYOffset > sticky) {
+        collection.classList.add("sticky");
+      } else {
+        collection.classList.remove("sticky");
+      }
+    }
+  }
+
+
+
 $(document).ready(function() {
+
   $("#like_").click(function(e){
     e.preventDefault()
-    var this_ = $(this)
-    var likeUrl = this_.attr("data-href")
+    var this_ = $(this);
+    var likeUrl = this_.attr("data-href");
 
     $.ajax({
       url: likeUrl,
@@ -67,12 +84,12 @@ $(document).ready(function() {
       data: {},
       success: function(data){
       }, error: function(error){
-        console.log("error")
+        console.log("error");
       }
     })
-    $("#toAdd").append("<p><strong>Beğendiğin için teşekkür ederim.</strong></p>")
-    this_.hide()
-  })
+    $("#toAdd").append("<p><strong>Beğendiğin için teşekkür ederim.</strong></p>");
+    this_.hide();
+  });
 })
 </script>
 
