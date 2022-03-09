@@ -13,7 +13,7 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-color: black;
-      background-image: url("{% static 'hero-pc.jpg' %}");
+      background-image: url("{% static 'hero-pc.webp' %}");
     }
 
     .sidenav-trigger {
@@ -52,13 +52,31 @@
         font-size: 28px;
       }
       .hero {
-        background-image: url("{% static 'hero-mobile.jpg' %}");
+        background-image: url("{% static 'hero-mobile.webp' %}");
       }
 
       .hero-p {
         top: 35%;
         padding-right: 15px;
       }
+    }
+
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      width: 100vw;
+      background: #fff;
+      padding: 10px;
+      border-bottom: 1px black solid;
+      border-top-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .filter-container p {
+      display: inline-block;
+      margin: 10px;
     }
 
   </style>
@@ -76,13 +94,20 @@
       <p class="hero-p">Bilim, mühendislik ve insan üzerine notlarım.</p>
     </div>
   </div>
-
-<br><br>
   <div>
+
+    <div class="filter-container">
+        <form method="get">
+            {{ filter.form.as_p }}
+            <input type="submit" class="btn" />
+        </form>
+      </div>
+
     <div class="container">
+
       <h1>Gönderiler</h1>
     </div>
-    {% for post in posts %}
+    {% for post in filter.qs %}
       <div class="container container-fluid">
 
          <div class="card">

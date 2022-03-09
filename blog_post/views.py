@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from django.contrib import messages
 from taggit.models import Tag
+from .filters import PostFilter
 
 def robotsView(request):
     text = """
@@ -24,52 +25,15 @@ Sitemap: https://pencereblog.pythonanywhere.com/sitemap.xml
     return HttpResponse(text, content_type="text/plain")
 
 
-class PostLikeView(RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        pk = self.kwargs.get("pk")
-        obj = get_object_or_404(Post, pk=pk)
-        url_ = obj.get_absolute_url()
-        user = self.request.user
-        if user.is_authenticated:
-            if not user in obj.likes.all():
-                obj.likes.add(user)
-        return url_
-
-
-class PostLikeApiView(APIView):
-    authentication_classes = (authentication.SessionAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def get(self, request, pk=None, format=None):
-        obj = get_object_or_404(Post, pk=pk)
-        url_ = obj.get_absolute_url()
-        user = self.request.user
-        updated = False
-        liked = False
-        if user.is_authenticated:
-            if not user in obj.likes.all():
-                liked = True
-                obj.likes.add(user)
-            updated = True
-        data = {"updated": updated, "liked": liked}
-        messages.success(request, "Beğenme işlemi başarıyla sonuçlandı.")
-        return Response(data)
-
-
-class HomeView(ListView):
-    model = Post
-    template_name = 'home.html'
-    ordering = ['-date_created']
-
-
 def homeView(request, tag_slug=None):
     posts = Post.objects.all()
     tag = None
+    post_filter = PostFilter(request.GET, queryset=Post.objects.all())
 
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         posts = Post.objects.filter(tags__in=[tag])
-    return render(request, "home.html", {"posts": posts, "tag":tag})
+    return render(request, "home.html", {"posts": posts, "tag":tag, "filter": post_filter})
 
 
 class ArticleDetailView(DetailView):
@@ -103,6 +67,39 @@ def categoryView(request, id):
     category = Post.objects.filter(category=id).first()
     context = {'posts': posts, 'category':category}
     return render(request, 'category.html', context)
+
+
+class PostLikeView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        pk = self.kwargs.get("pk")
+        obj = get_object_or_404(Post, pk=pk)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user.is_authenticated:
+            if not user in obj.likes.all():
+                obj.likes.add(user)
+        return url_
+
+
+class PostLikeApiView(APIView):
+    authentication_classes = (authentication.SessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, pk=None, format=None):
+        obj = get_object_or_404(Post, pk=pk)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        updated = False
+        liked = False
+        if user.is_authenticated:
+            if not user in obj.likes.all():
+                liked = True
+                obj.likes.add(user)
+            updated = True
+        data = {"updated": updated, "liked": liked}
+        messages.success(request, "Beğenme işlemi başarıyla sonuçlandı.")
+        return Response(data)
+
 
 def authorView(request, id):
     posts = Post.objects.all().filter(author=id).order_by("-date_created")
