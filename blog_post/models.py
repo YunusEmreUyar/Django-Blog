@@ -45,6 +45,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, blank=True, related_name='likes')
     series = models.ForeignKey(PostSeries, null=True, blank=True, on_delete=models.SET_NULL)
     tags = TaggableManager()
+    is_draft = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

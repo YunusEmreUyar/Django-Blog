@@ -26,9 +26,9 @@ Sitemap: https://pencereblog.pythonanywhere.com/sitemap.xml
 
 
 def homeView(request, tag_slug=None):
-    posts = Post.objects.all()
+    posts = Post.objects.filter(is_draft=False)
     tag = None
-    post_filter = PostFilter(request.GET, queryset=Post.objects.all())
+    post_filter = PostFilter(request.GET, queryset=Post.objects.filter(is_draft=False))
 
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
@@ -63,7 +63,7 @@ class ArticleDetailView(DetailView):
         return self.get(self, request, *args, **kwargs)
 
 def categoryView(request, id):
-    posts = Post.objects.all().filter(category=id).order_by("-date_created")
+    posts = Post.objects.all().filter(category=id, is_draft=False).order_by("-date_created")
     category = Post.objects.filter(category=id).first()
     context = {'posts': posts, 'category':category}
     return render(request, 'category.html', context)
@@ -102,7 +102,7 @@ class PostLikeApiView(APIView):
 
 
 def authorView(request, id):
-    posts = Post.objects.all().filter(author=id).order_by("-date_created")
+    posts = Post.objects.all().filter(author=id, is_draft=False).order_by("-date_created")
     author = User.objects.filter(id=id).first()
     context = {'posts': posts, 'author': author}
     return render(request, 'author.html', context)
