@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %}{{ category.category.name }} sayfası{% endblock %}
+{% block title %}{{ category.name }} sayfası{% endblock %}
 
 {% block main %}
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">{{ category.category.name }} kategorisi altındaki yazılar</h1>
-    <img src="{{category.image.url}}">
+    <h1 class="display-4">{{ category.name }} kategorisi altındaki yazılar</h1>
   </div>
 </div>
 <div>

@@ -175,8 +175,8 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = "media/"
 
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'blog_home'
+LOGOUT_REDIRECT_URL = 'blog_home'
 
 CRISPY_TEMPLATE_PACK = 'materialize_css_forms'
 

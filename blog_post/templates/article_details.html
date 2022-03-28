@@ -3,22 +3,74 @@
 {% load crispy_forms_tags %}
 {% block title %}{{ post.title }}{% endblock %}
 
+{% block style %}
+    <style>
+        .profile-head {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .profile-head h4 {
+            font-weight: 800;
+        }
+
+        .tags {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .tag {
+          display: inline-block;
+          border-width: 1px;
+          border-style: solid;
+          border-color: #c8d7f2 transparent #c8d7f2 #c8d7f2;
+          border-radius: .25em 0 0 .25em;
+          padding: 0.1em 0.6em 0.1em 0.3em;
+          background-color: #e5ecf9;
+          line-height: 1.2em;
+        }
+
+        .tag:after {
+          content: "\25CF";
+          position: absolute;
+          display: inline-block;
+          height: 1.2em;
+          width: 1.17em;
+          transform: rotate(45deg);
+          color: white;
+          text-indent: 0.3em;
+          line-height: 1em;
+          text-shadow: 0 0 1px #333;
+          background-color: #e5ecf9;
+          border-radius: 0.33em 0.33em 0.33em 1em;
+          border-width: 1px;
+          border-style: solid;
+          border-color: #c8d7f2 #c8d7f2 transparent transparent;
+        }
+
+
+        @media only screen and (max-width: 768px) {
+            .mob {
+                justify-content: flex-end;
+                flex-direction: column;
+            }
+        }
+
+    </style>
+{% endblock %}
+
 {% block main %}
 
-  <div class="container">
+  <div class="container"><br>
     <h1 class="display-4">{{ post.title|safe }}</h1>
     <p class="lead">{{ post.description }}</p>
-    <div class="card-content-meta">
-      <p class="lead">{{post.date_created}} tarihinde paylaşıldı.</p>
-      <p class="lead">Tahmini okuma süresi: {{ post.estimated_reading_time }} dakika.</p>
+    <div class="card-content-meta mob">
+        <p class="lead">{{post.date_created}} tarihinde paylaşıldı.</p>
+        <p class="lead">Tahmini okuma süresi: {{ post.estimated_reading_time }} dakika.</p>
     </div>
-
-    <div class="tags">
-      {% for tag in post.tags.all %}
-        <a href="{% url 'post_tag' tag.slug %}" class="chip cyan white-text">{{ tag.name }}</a>
-      {% endfor %}
-    </div><br>
-
   </div>
 
 <div class="row container container-fluid mt-5 mb-5">
@@ -55,7 +107,7 @@
 </div>
 
 <script>
-  
+
   var collection = document.getElementById("collection");
   var sticky = collection.offsetTop;
   console.log(screen.width, typeof(screen.width));
@@ -93,15 +145,26 @@ $(document).ready(function() {
 })
 </script>
 
+    <div class="container container-fluid">
+        <div class="tags">
+          {% for tag in post.tags.all %}
+            <a href="{% url 'post_tag' tag.slug %}" class="tag">{{ tag.name }}</a>
+          {% endfor %}
+        </div><br>
+    </div>
+
 <br>
 <div class="container container-fluid">
   <div class="row">
     <div class="col">
-      {% if post.author.profile.profile_pic %}
-        <img src="{{ post.author.profile.profile_pic.url }}" class="rounded-circle profile float-left">
-      {% else %}
-        <img src="{% static 'default-profile.png' %}"  class="rounded-circle float-left profile">
-      {% endif %}
+        <div class="profile-head">
+        {% if post.author.profile.profile_pic %}
+            <img src="{{ post.author.profile.profile_pic.url }}" class="rounded-circle profile float-left">
+          {% else %}
+            <img src="{% static 'default-profile.png' %}"  class="rounded-circle float-left profile">
+        {% endif %}
+        <h4>{{post.author.username}}</h4>
+      </div>
       <p style="margin-left:5px;">{{ post.author.profile.description }}</p>
       <p>
       {% if post.author.profile.instagram_url %}
@@ -117,7 +180,7 @@ $(document).ready(function() {
 <br>
 
 
-<div class="container container-fluid">
+<div class="container container-fluid row s12 m12 l12">
 
 <br><br>
   {% if comments %}
@@ -156,7 +219,4 @@ $(document).ready(function() {
   {% endif %}
 </div>
 <br><br>
-
-
-
 {% endblock %}

@@ -26,13 +26,13 @@ Sitemap: https://pencereblog.pythonanywhere.com/sitemap.xml
 
 
 def homeView(request, tag_slug=None):
-    posts = Post.objects.filter(is_draft=False)
+    posts = Post.objects.filter(is_draft=False).order_by("-date_created")
     tag = None
-    post_filter = PostFilter(request.GET, queryset=Post.objects.filter(is_draft=False))
+    post_filter = PostFilter(request.GET, queryset=Post.objects.filter(is_draft=False).order_by("-date_created"))
 
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
-        posts = Post.objects.filter(tags__in=[tag])
+        posts = Post.objects.filter(tags__in=[tag]).order_by("-date_created")
     return render(request, "home.html", {"posts": posts, "tag":tag, "filter": post_filter})
 
 
@@ -49,7 +49,7 @@ class ArticleDetailView(DetailView):
 
         if self.request.user.is_authenticated:
             data['comment_form'] = CommentForm(instance=self.request.user)
-        
+
         post_tags_ids = self.object.tags.values_list('id', flat=True)
         similar_posts = Post.objects.filter(tags__in=post_tags_ids).exclude(id=self.object.id)
         data["similar_posts"] = similar_posts.annotate(same_tags=Count("tags")).order_by("-same_tags")[:6]
@@ -63,8 +63,8 @@ class ArticleDetailView(DetailView):
         return self.get(self, request, *args, **kwargs)
 
 def categoryView(request, id):
-    posts = Post.objects.all().filter(category=id, is_draft=False).order_by("-date_created")
-    category = Post.objects.filter(category=id).first()
+    posts = Post.objects.filter(category=id, is_draft=False).order_by("-date_created")
+    category = Category.objects.get(id=id)
     context = {'posts': posts, 'category':category}
     return render(request, 'category.html', context)
 
@@ -102,7 +102,7 @@ class PostLikeApiView(APIView):
 
 
 def authorView(request, id):
-    posts = Post.objects.all().filter(author=id, is_draft=False).order_by("-date_created")
-    author = User.objects.filter(id=id).first()
+    posts = Post.objects.filter(author=id, is_draft=False).order_by("-date_created")
+    author = User.objects.get(id=id)
     context = {'posts': posts, 'author': author}
     return render(request, 'author.html', context)

@@ -14,6 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <title>{% block title %} {% endblock %} - Pencereblog</title>
     <script src="https://use.fontawesome.com/3a18b9b449.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <style type="text/css">
 
@@ -168,8 +169,11 @@
         }
 
         .display-4 {
-          animation: 1s ease-in 0s 1 translate-from-left;
+            animation: 1s ease-in 0s 1 translate-from-left;
+            margin-top: 20px;
+            font-weight: 800;
         }
+
 
         @keyframes translate-from-left {
           from {
@@ -232,7 +236,6 @@
         <li><a class="waves-effect" href="{% url 'category' category.id %}">{{ category }}</a></li>
       {% endfor %}
     </ul>
-
     <a href="#" data-target="slide-out" class="sidenav-trigger" id="trigger"><i class="fa fa-bars fa-2x"></i></a>
 
     {% block main %}
@@ -250,11 +253,6 @@
             </script>
         {% endfor %}
     {% endif %}
-      <script
-        src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"
-        integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY="
-        crossorigin="anonymous">
-      </script>
      <footer class="page-footer">
         <div class="container">
           <div class="row">

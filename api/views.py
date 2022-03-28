@@ -42,7 +42,7 @@ def homeView(request):
 			/<int:id> Returns all comments of the post that has given id.
 			/create/<int:postId>/ Create comment object to given obj.
 		like/
-			/<int:postId>/ Updates post like field of the post that has given id. 
+			/<int:postId>/ Updates post like field of the post that has given id.
 			Takes userId and postId to like.
 		register/
 			/ Registers a new user object with given username, password, password2 and email.
@@ -75,7 +75,7 @@ class PostList(APIView):
 	Get all posts
 	"""
 	def get(self, request, format=None):
-		posts = Post.objects.all().order_by('-date_created')
+		posts = Post.objects.filter(is_draft=False).order_by('-date_created')
 		serializer = PostSerializer(posts, many=True)
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -95,7 +95,7 @@ class PostListByCategory(APIView):
 	Get posts list from given category.
 	"""
 	def get(self, request, pk, format=None):
-		posts = get_list_or_404(Post, category=pk)
+		posts = get_list_or_404(Post, category=pk, is_draft=False)
 		serializer = PostSerializer(posts, many=True)
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -105,7 +105,7 @@ class PostListByAuthor(APIView):
 	Get posts list of given author.
 	"""
 	def get(self, request, pk, format=None):
-		posts = get_list_or_404(Post, author=pk)
+		posts = get_list_or_404(Post, author=pk, is_draft=False)
 		serializer = PostSerializer(posts, many=True)
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -156,7 +156,7 @@ class CreateComment(APIView):
 	Create comment obj for given post.
 	"""
 	authentication_classes = (JWTAuthentication,)
-	permission_classes = [IsAuthenticated,]          
+	permission_classes = [IsAuthenticated,]
 
 	def put(self, request, pk, format=None):
 		post = get_object_or_404(Post, pk=pk)
